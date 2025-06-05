@@ -56,8 +56,8 @@ void send_rst_to_server(pcap_t* handle, const EthHdr* eth, const IpHdr* ip, cons
 
     IpHdr* ip_new = (IpHdr*)(pkt + sizeof(EthHdr));
     std::memcpy(ip_new, ip, ip_len);
-    ip_new->sip_ = ip->dip_;
-    ip_new->dip_ = ip->sip_;
+    ip_new->sip_ = ip->sip_;
+    ip_new->dip_ = ip->dip_;
     ip_new->ttl = 128;
     ip_new->total_length = htons(ip_len + tcp_len);
     ip_new->checksum = 0;
@@ -65,8 +65,8 @@ void send_rst_to_server(pcap_t* handle, const EthHdr* eth, const IpHdr* ip, cons
 
     TcpHdr* tcp_new = (TcpHdr*)((uint8_t*)ip_new + ip_len);
     std::memcpy(tcp_new, tcp, tcp_len);
-    tcp_new->sport_ = tcp->dport_;
-    tcp_new->dport_ = tcp->sport_;
+    tcp_new->sport_ = tcp->sport_;
+    tcp_new->dport_ = tcp->dport_;
     tcp_new->seq_ = htonl(ntohl(tcp->seq_) + payload_len);
     tcp_new->flags_ = TcpHdr::RST | TcpHdr::ACK;
     tcp_new->win_ = 0;
