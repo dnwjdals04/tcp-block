@@ -8,12 +8,10 @@
 #include <cstring>
 #include <string>
 #include <vector>
-
 #include "ethhdr.h"
 #include "iphdr.h"
 #include "tcphdr.h"
 #include "mac.h"
-
 #define REDIRECT_MSG "HTTP/1.0 302 Redirect\r\nLocation: http://warning.or.kr\r\n\r\n"
 
 void usage() {
